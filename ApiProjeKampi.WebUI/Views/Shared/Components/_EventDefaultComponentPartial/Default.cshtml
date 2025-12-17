@@ -1,0 +1,63 @@
+@model List<ResultEventDto>
+
+<section id="events" class="events section">
+
+    <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="swiper init-swiper">
+            <script type="application/json" class="swiper-config">
+                {
+                  "loop": true,
+                  "speed": 600,
+                  "autoplay": {
+                    "delay": 5000
+                  },
+                  "slidesPerView": "auto",
+                  "pagination": {
+                    "el": ".swiper-pagination",
+                    "type": "bullets",
+                    "clickable": true
+                  },
+                  "breakpoints": {
+                    "320": {
+                      "slidesPerView": 1,
+                      "spaceBetween": 40
+                    },
+                    "1200": {
+                      "slidesPerView": 3,
+                      "spaceBetween": 1
+                    }
+                  }
+                }
+            </script>
+            <div class="swiper-wrapper">
+
+                @foreach(var item in Model)
+                {
+                    // Veritabanında /images/events/01.jpg gibi değerler var ama dosyalar 1.jpg şeklinde
+                    // Baştaki sıfırları kaldırıyoruz
+                    var imagePath = item.ImageUrl;
+                    if (!string.IsNullOrEmpty(imagePath) && imagePath.Contains("/images/events/0"))
+                    {
+                        // /images/events/01.jpg -> /images/events/1.jpg
+                        imagePath = System.Text.RegularExpressions.Regex.Replace(imagePath, @"/images/events/0+(\d+)", "/images/events/$1");
+                    }
+                    <div class="swiper-slide event-item d-flex flex-column justify-content-end" style="background-image:url('@Url.Content(imagePath)')">
+                        <h3>@item.Title</h3>
+                        <div class="price align-self-start">@item.Price ₺</div>
+                        <p class="description">
+                            @item.Description
+                        </p>
+                    </div>
+
+                    <!-- End Event item -->
+                }
+                
+
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+
+    </div>
+
+</section>

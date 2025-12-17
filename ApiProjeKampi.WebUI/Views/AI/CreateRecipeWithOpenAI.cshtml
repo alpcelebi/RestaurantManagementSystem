@@ -1,0 +1,38 @@
+
+@{
+    ViewData["Title"] = "CreateRecipeWithOpenAI";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Open AI ile yapay zeka destekli yemek tarifi önerisi </h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <label>Elinizdeki malzemeler ve anahtar kelimeleri giriniz</label>
+                            <input type="text" name="promt" class="form-control" />
+                            <br />
+                            <button class="btn btn-primary">Tarif Önerisi Oluştur</button>
+                        </form>
+                        <br /><br />
+                        @if(ViewBag.recipe!=null)
+                        {
+                           <hr />
+                           <h5>Oluşturulan AI yemek tarifi önerisi </h5>
+                           @Html.Raw(ViewBag.recipe.ToString())
+
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

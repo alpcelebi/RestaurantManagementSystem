@@ -1,0 +1,51 @@
+@model GetMessageByIdDto
+@{
+    ViewData["Title"] = "UpdateMessage";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Mesaj Güncelleme Sayfası</h4>
+                    </div>
+                    <div class="card-body">
+                        @if (Model != null)
+                        {
+                            <form method="post">
+                                <input type="hidden" name="MessageId" value="@Model.MessageId"/>
+                                <label>Adı</label>
+                                <input type="text" name="NameSurname" value="@(Model.NameSurname ?? "")" class="form-control" />
+                                <br />
+                                <label>Gönderici Email</label>
+                                <input type="text" name="Email" value="@(Model.Email ?? "")" class="form-control" />
+                                <br />
+                                <label>Mesaj Konusu</label>
+                                <input type="text" name="Subject" value="@(Model.Subject ?? "")" class="form-control" />
+                                <br />
+                                <label>Mesaj İçeriği</label>
+                                <textarea name="MessageDetails" class="form-control" rows="4">@(Model.MessageDetails ?? "")</textarea>
+                                <br />
+                                <input type="hidden" name="SendDate" value="@Model.SendDate" />
+                                <input type="hidden" name="IsRead" value="@Model.IsRead" />
+                                <button class="btn btn-primary">Mesaj Güncelle</button>
+                                <a href="@Url.Action("MessageList")" class="btn btn-secondary">İptal</a>
+                            </form>
+                        }
+                        else
+                        {
+                            <div class="alert alert-warning">
+                                <p>Mesaj verisi yüklenemedi.</p>
+                                <a href="@Url.Action("MessageList")" class="btn btn-primary">Mesaj Listesine Dön</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

@@ -1,0 +1,161 @@
+@model CreateReservationDto
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+@await Component.InvokeAsync("_HeadDefaultComponentPartial")
+
+<body class="index-page">
+
+    @await Component.InvokeAsync("_NavbarDefaultComponentPartial")
+
+
+    <main class="main">
+
+        <!-- Hero Section -->
+        @await Component.InvokeAsync("_FeatureDefaultComponentPartial")
+
+        <!-- /Hero Section -->
+        <!-- About Section -->
+        @await Component.InvokeAsync("_AboutDefaultComponentPartial")
+
+        <!-- /About Section -->
+        <!-- Why Us Section -->
+        @await Component.InvokeAsync("_ServiceDefaultComponentPartial")
+        @await Component.InvokeAsync("_HomePageStatisticsComponentPartial")
+        <!-- /Why Us Section -->
+        <!-- Stats Section -->
+       <!-- /Stats Section -->
+        <!-- Menu Section -->
+        @await Component.InvokeAsync("_DefaultMenuViewComponentPartial")
+       
+      <!-- /Menu Section -->
+        <!-- Testimonials Section -->
+        @await Component.InvokeAsync("_TestimonialDefaultComponentPartial")
+      
+       <!-- /Testimonials Section -->
+        <!-- Events Section -->
+        @await Component.InvokeAsync("_EventDefaultComponentPartial")
+   
+  <!-- /Events Section -->
+        <!-- Chefs Section -->
+        @await Component.InvokeAsync("_ChefDefualtComponentPartial")
+       
+     
+        <!-- Book A Table Section -->
+        <section id="book-a-table" class="book-a-table section">
+
+            <!-- Section Title -->
+            <div class="container section-title" data-aos="fade-up">
+                <h2>Rezervasyon Paneli  </h2>
+                <p><span>Sizleri Misafir Etmekten </span> <span class="description-title"> Memmuniyet Duyarız <br></span></p>
+            </div><!-- End Section Title -->
+
+            <div class="container">
+
+                <div class="row g-0" data-aos="fade-up" data-aos-delay="100">
+
+                    <div class="col-lg-4 reservation-img" style="background-image: url('@Url.Content("~/yummy-red-1.0.0/assets/img/reservation.jpg")');"></div>
+
+                    <div class="col-lg-8 d-flex align-items-center reservation-form-bg" data-aos="fade-up" data-aos-delay="200">
+                        <form asp-controller="Reservation" asp-action="CreateReservation" method="post" role="form" id="reservationForm">
+                            @Html.AntiForgeryToken()
+                            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+                            <div class="row gy-4">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" asp-for="NameSurname" class="form-control" id="name" placeholder="Adınız Soyadınız" required="">
+                                    <span asp-validation-for="NameSurname" class="text-danger"></span>
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="email" class="form-control" asp-for="Email" id="email" placeholder="E-Posta Adresiniz" required="">
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="text" class="form-control" asp-for="PhoneNumber" id="phone" placeholder="Telefon Numaranız" required="">
+                                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="date" asp-for="ReservationDate" class="form-control" id="date" placeholder="Rezervasyon Tarihi" required="" min="@DateTime.Now.ToString("yyyy-MM-dd")" value="">
+                                    <span asp-validation-for="ReservationDate" class="text-danger"></span>
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="time" class="form-control" asp-for="ReservationTime" id="time" placeholder="Rezervasyon Saati" required="">
+                                    <span asp-validation-for="ReservationTime" class="text-danger"></span>
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="number" class="form-control" asp-for="CountofPeople" id="people" placeholder="Kişi Sayısı" required="">
+                                    <span asp-validation-for="CountofPeople" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <textarea class="form-control" asp-for="Message" rows="5" placeholder="Eklemek İstedikleriniz"></textarea>
+                                <span asp-validation-for="Message" class="text-danger"></span>
+                            </div>
+
+                            <div class="text-center mt-3">
+                                @if (TempData["SuccessMessage"] != null)
+                                {
+                                    <div class="alert alert-success mb-3">@TempData["SuccessMessage"]</div>
+                                }
+                                @if (TempData["ErrorMessage"] != null)
+                                {
+                                    <div class="alert alert-danger mb-3">@TempData["ErrorMessage"]</div>
+                                }
+                                <button type="submit" class="btn btn-primary">Rezervasyon Oluşturun</button>
+                            </div>
+                        </form>
+                    </div><!-- End Reservation Form -->
+
+                </div>
+
+            </div>
+
+        </section><!-- /Book A Table Section -->
+        <!-- Gallery Section -->
+        @await Component.InvokeAsync("_DefaultGalleryComponentPartial")
+       
+        <!-- /Gallery Section -->
+        <!-- Contact Section -->
+        @await Component.InvokeAsync("_DefaultContactComponentPartial")
+       
+        <!-- /Contact Section -->
+
+    </main>
+
+    @await Component.InvokeAsync("_FooterDefaultComponentPartial")
+
+    <!-- jQuery (Validation için gerekli) -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @await Html.PartialAsync("~/Views/Shared/_ValidationScriptsPartial.cshtml")
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var form = document.getElementById('reservationForm');
+            if (form) {
+                console.log('=== FORM BULUNDU ===');
+                
+                // Form submit edildiğinde log yaz - jQuery kullanmadan
+                form.addEventListener('submit', function(e) {
+                    console.log('=== FORM SUBMIT EDİLDİ ===');
+                    var formData = new FormData(form);
+                    console.log('Form verileri:');
+                    for (var pair of formData.entries()) {
+                        console.log(pair[0] + ': ' + pair[1]);
+                    }
+                    console.log('Form sunucuya gönderiliyor...');
+                    // Form'un normal submit işlemini engelleme - ASP.NET Core'a bırak
+                });
+            } else {
+                console.error('Form bulunamadı!');
+            }
+        });
+    </script>
+
+</body>
+
+</html>
